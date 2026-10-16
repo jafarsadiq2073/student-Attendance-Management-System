@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin - Attendance System</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+
+    <a href="index.html">Home</a> |
+    <a href="admin.html">Admin</a> |
+    <a href="user.html">Student</a>
+
+    <h2>Mark Attendance</h2>
+
+    <form>
+        <label>Student Name:</label>
+        <input type="text" id="name" required>
+        <br><br>
+
+        <label>Status:</label>
+        <select id="status">
+            <option>Present</option>
+            <option>Absent</option>
+        </select>
+        <br><br>
+
+        <button type="button" onclick="saveAttendance()">
+            Save Attendance
+        </button>
+    </form>
+
+    <p id="message"></p>
+
+    <script>
+        function saveAttendance() {
+            let name = document.getElementById("name").value;
+            let status = document.getElementById("status").value;
+
+            if (name.trim() === "") {
+                alert("Enter student name");
+                return;
+            }
+
+            let data = JSON.parse(
+                localStorage.getItem("attendance") || "[]"
+            );
+
+            data.push({ name: name, status: status });
+
+            localStorage.setItem("attendance", JSON.stringify(data));
+
+            document.getElementById("message").innerText =
+                "Attendance saved successfully!";
+
+            document.getElementById("name").value = "";
+        }
+    </script>
+</body>
+</html>
